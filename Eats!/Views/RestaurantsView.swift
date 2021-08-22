@@ -7,16 +7,24 @@
 
 import UIKit
 
-class RestaurantsView: UIViewController {
+class RestaurantsView: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var restaurants = Database.testData
-    private let cellHeight: CGFloat = 96.0
-    private var searchIconSize = CGSize()
-    private let searchIconTag = 777
+    var data = Database.testData
+    private let cellHeight: CGFloat = 104.0
+     
+    var restaurants: [Restaurant] {
+        let searchText = (searchField.text ?? "").lowercased()
+        guard searchText.count > 0 else {
+            return data
+        }
+        return data.filter { restaurant in
+            return restaurant.name.lowercased().contains(searchText)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +34,23 @@ class RestaurantsView: UIViewController {
         filterButton.layer.borderColor = UIColor.eatsGrayBorder.cgColor
         filterButton.layer.cornerRadius = 8.0
         
-        // Setup search field
+        // Setup search field with right side icon image and delegate callbacks.
         guard let searchImage = UIImage(named: "SearchIcon") else {
             return Log.fail("Search image not in bundle")
         }
-        searchIconSize = CGSize(width: searchImage.size.width/2, height: searchImage.size.width/2)
-         let filterImageView = UIImageView(image: searchImage)
-        filterImageView.tag = searchIconTag
+        let filterImageView = UIImageView(image: searchImage)
         searchField.addSubview(filterImageView)
-//        let margins = searchField.layoutMarginsGuide
-//        filterImageView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 16.0).isActive = true
+        filterImageView.translatesAutoresizingMaskIntoConstraints = false
+        filterImageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        filterImageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        filterImageView.topAnchor.constraint(equalTo: searchField.topAnchor, constant: 4).isActive = true
+        filterImageView.rightAnchor.constraint(equalTo: searchField.rightAnchor, constant: -4).isActive = true
         
-        // Setup table
+        // Get search text field changes
+        searchField.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(searchFieldChanged), name: UITextField.textDidChangeNotification, object: nil)
+        
+        // Setup table layout
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = cellHeight
@@ -47,29 +60,25 @@ class RestaurantsView: UIViewController {
         tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: RestaurantCell.reuseIdentifier)
         tableView.backgroundColor = UIColor.eatsTableBackground
    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        // Position search icon at right edge of search field once view has been resized
-        guard let searchIcon = searchField.viewWithTag(searchIconTag) else {
-            return Log.error("Can't find search icon in search field")
-        }
-        let fieldSize = searchField.frame.size
-        searchIcon.frame = CGRect(x: fieldSize.width - searchIconSize.width, y: (fieldSize.height - searchIconSize.height)/2, width: searchIconSize.width, height: searchIconSize.height)
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView.reloadData()
     }
     
+    // MARK: ACTIONS ---------------------------------------------------------------------------------
+
     @IBAction func filterAction(_ sender: Any) {
-        print("FILTER!!")
+        tableView.reloadData()
+    }
+    
+    @objc func searchFieldChanged() {
+        tableView.reloadData()
     }
 }
 
+// MARK: TableView ---------------------------------------------------------------------------------
 extension RestaurantsView: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -88,18 +97,6 @@ extension RestaurantsView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
-    
-//    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        return false
-//    }
-
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 28.0
-//    }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//
-//    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: RestaurantCell.reuseIdentifier, for: indexPath) as? RestaurantCell else {

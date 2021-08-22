@@ -18,6 +18,7 @@ class Database {
             Restaurant(name: "Nick's Italian", image: UIImage(named: "martis-trail")!, rating: 3, cost: .medium, ratingCount: 128, bodyText: "Very good italian", latitude: 0.0, longitude: 0.0, isFavorite: true)!,
             Restaurant(name: "Olive Garden", image: UIImage(named: "martis-trail")!, rating: 4, cost: .low, ratingCount: 10293, bodyText: "Acceptable Italian", latitude: 0.0, longitude: 0.0, isFavorite: false)!,
             Restaurant(name: "McDonalds", image: UIImage(named: "martis-trail")!, rating: 2, cost: .cheap, ratingCount: 44392, bodyText: "Fast food", latitude: 0.0, longitude: 0.0, isFavorite: false)!
+            Restaurant(name: "PF Changs", image: UIImage(named: "martis-trail")!, rating: 4, cost: .medium, ratingCount: 1213, bodyText: "It's a chain but good chinese food", latitude: 0.0, longitude: 0.0, isFavorite: false)!
         ]
     }
 }

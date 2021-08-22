@@ -3,9 +3,13 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="ProximaNova-Light.otf">
+            <string>ProximaNova-Light</string>
+        </array>
         <array key="ProximaNova-Regular.otf">
             <string>ProximaNova-Regular</string>
         </array>
@@ -16,83 +20,103 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RestaurantCell" rowHeight="144" id="nJV-D2-7Ax" customClass="RestaurantCell" customModule="Eats_" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RestaurantCell" rowHeight="324" id="nJV-D2-7Ax" customClass="RestaurantCell" customModule="Eats_" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="554" height="304"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nJV-D2-7Ax" id="uB7-rU-t81">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="124"/>
+                <rect key="frame" x="0.0" y="0.0" width="554" height="304"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylk-tT-XQo">
-                        <rect key="frame" x="378" y="16" width="20" height="22"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAG-Td-HI1">
+                        <rect key="frame" x="16" y="12" width="522" height="292"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylk-tT-XQo">
+                                <rect key="frame" x="486" y="16" width="20" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="4aT-cf-qdL"/>
+                                    <constraint firstAttribute="width" constant="20" id="Bif-XS-MZh"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="ia8-Ak-Rib"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="quQ-NW-kXB"/>
+                                </constraints>
+                                <state key="normal" image="Favorited"/>
+                                <connections>
+                                    <action selector="favoriteTapped:" destination="nJV-D2-7Ax" eventType="touchUpInside" id="sdz-1G-pRQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxr-fo-n29">
+                                <rect key="frame" x="292" y="16" width="178" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="XJr-l7-wVM"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="hYn-z7-rxY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
+                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8L-OJ-JNS">
+                                <rect key="frame" x="292" y="133" width="120" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="5hI-BP-f7A"/>
+                                    <constraint firstAttribute="height" constant="26" id="d4d-qC-e6y"/>
+                                </constraints>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$$ • Supporting Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyV-bE-xPu">
+                                <rect key="frame" x="292" y="262" width="178" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="7Zu-lG-6Ag"/>
+                                    <constraint firstAttribute="height" constant="14" id="z9s-5j-mdW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BKd-E2-B0b">
+                                <rect key="frame" x="16" y="16" width="260" height="260"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="BKd-E2-B0b" secondAttribute="height" multiplier="1:1" id="F6a-CW-Dd0"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(135)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1P-7O-JGq">
+                                <rect key="frame" x="416" y="139" width="52" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="Top-Xa-A8W"/>
+                                    <constraint firstAttribute="width" constant="52" id="cHs-5X-3Iz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="ProximaNova-Light" family="Proxima Nova" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="22" id="4aT-cf-qdL"/>
-                            <constraint firstAttribute="width" constant="20" id="Bif-XS-MZh"/>
+                            <constraint firstItem="E8L-OJ-JNS" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="1jy-Bg-rhB"/>
+                            <constraint firstItem="JyV-bE-xPu" firstAttribute="bottom" secondItem="BKd-E2-B0b" secondAttribute="bottom" id="5ZD-R1-ANB"/>
+                            <constraint firstItem="JyV-bE-xPu" firstAttribute="trailing" secondItem="Pxr-fo-n29" secondAttribute="trailing" id="7ys-uW-VFB"/>
+                            <constraint firstItem="ylk-tT-XQo" firstAttribute="top" secondItem="BAG-Td-HI1" secondAttribute="top" constant="16" id="95q-4K-xvm"/>
+                            <constraint firstItem="ylk-tT-XQo" firstAttribute="leading" secondItem="Pxr-fo-n29" secondAttribute="trailing" constant="16" id="EYM-xm-Aip"/>
+                            <constraint firstItem="Pxr-fo-n29" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="NEL-4u-sXg"/>
+                            <constraint firstItem="JyV-bE-xPu" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="WNk-1f-NeV"/>
+                            <constraint firstItem="Pxr-fo-n29" firstAttribute="top" secondItem="BKd-E2-B0b" secondAttribute="top" id="buU-dF-CRU"/>
+                            <constraint firstItem="G1P-7O-JGq" firstAttribute="centerY" secondItem="E8L-OJ-JNS" secondAttribute="centerY" id="cBW-v7-ANJ"/>
+                            <constraint firstItem="BKd-E2-B0b" firstAttribute="leading" secondItem="BAG-Td-HI1" secondAttribute="leading" constant="16" id="cEz-Ix-y9Y"/>
+                            <constraint firstAttribute="bottom" secondItem="BKd-E2-B0b" secondAttribute="bottom" constant="16" id="fiM-xL-LIf"/>
+                            <constraint firstItem="BKd-E2-B0b" firstAttribute="top" secondItem="BAG-Td-HI1" secondAttribute="top" constant="16" id="jsg-EG-Qfn"/>
+                            <constraint firstAttribute="trailing" secondItem="ylk-tT-XQo" secondAttribute="trailing" constant="16" id="lc0-jz-e08"/>
+                            <constraint firstItem="G1P-7O-JGq" firstAttribute="leading" secondItem="E8L-OJ-JNS" secondAttribute="trailing" constant="4" id="xT1-Cb-RU3"/>
+                            <constraint firstItem="E8L-OJ-JNS" firstAttribute="centerY" secondItem="BKd-E2-B0b" secondAttribute="centerY" id="zZZ-fH-QEP"/>
                         </constraints>
-                        <state key="normal" image="Favorited"/>
-                        <connections>
-                            <action selector="favoriteTapped:" destination="nJV-D2-7Ax" eventType="touchUpInside" id="sdz-1G-pRQ"/>
-                        </connections>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restaurant Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxr-fo-n29">
-                        <rect key="frame" x="124" y="16" width="238" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="XJr-l7-wVM"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="20"/>
-                        <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8L-OJ-JNS">
-                        <rect key="frame" x="124" y="39" width="160" height="53"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="160" id="5hI-BP-f7A"/>
-                        </constraints>
-                    </stackView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$$ • Supporting Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyV-bE-xPu">
-                        <rect key="frame" x="124" y="94" width="238" height="14"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="14" id="z9s-5j-mdW"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                        <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BKd-E2-B0b">
-                        <rect key="frame" x="16" y="16" width="92" height="92"/>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(135)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1P-7O-JGq">
-                        <rect key="frame" x="300" y="55" width="52" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="Top-Xa-A8W"/>
-                            <constraint firstAttribute="width" constant="52" id="cHs-5X-3Iz"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                 <constraints>
-                    <constraint firstItem="G1P-7O-JGq" firstAttribute="leading" secondItem="E8L-OJ-JNS" secondAttribute="trailing" constant="16" id="0Lt-SQ-fGv"/>
-                    <constraint firstItem="E8L-OJ-JNS" firstAttribute="top" secondItem="Pxr-fo-n29" secondAttribute="bottom" constant="2" id="6e2-PY-lyH"/>
-                    <constraint firstItem="BKd-E2-B0b" firstAttribute="top" secondItem="uB7-rU-t81" secondAttribute="top" constant="16" id="7Fs-yY-hhu"/>
-                    <constraint firstItem="JyV-bE-xPu" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="8QC-9h-XAN"/>
-                    <constraint firstAttribute="trailing" secondItem="ylk-tT-XQo" secondAttribute="trailing" constant="16" id="FCT-ec-t5i"/>
-                    <constraint firstItem="BKd-E2-B0b" firstAttribute="width" secondItem="BKd-E2-B0b" secondAttribute="height" multiplier="1:1" id="Ghx-Jx-tte"/>
-                    <constraint firstItem="G1P-7O-JGq" firstAttribute="centerY" secondItem="E8L-OJ-JNS" secondAttribute="centerY" id="LM0-ol-zPp"/>
-                    <constraint firstItem="E8L-OJ-JNS" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="SF8-VB-nb8"/>
-                    <constraint firstItem="ylk-tT-XQo" firstAttribute="leading" secondItem="Pxr-fo-n29" secondAttribute="trailing" constant="16" id="Sdc-bM-wZi"/>
-                    <constraint firstItem="JyV-bE-xPu" firstAttribute="top" secondItem="E8L-OJ-JNS" secondAttribute="bottom" constant="2" id="TX9-7L-0ih"/>
-                    <constraint firstItem="JyV-bE-xPu" firstAttribute="bottom" secondItem="BKd-E2-B0b" secondAttribute="bottom" id="Tm7-9U-PET"/>
-                    <constraint firstItem="Pxr-fo-n29" firstAttribute="top" secondItem="BKd-E2-B0b" secondAttribute="top" id="bRc-IF-Lu0"/>
-                    <constraint firstAttribute="bottom" secondItem="BKd-E2-B0b" secondAttribute="bottom" constant="16" id="bvN-ai-raL"/>
-                    <constraint firstItem="JyV-bE-xPu" firstAttribute="trailing" secondItem="Pxr-fo-n29" secondAttribute="trailing" id="dv3-L2-6KD"/>
-                    <constraint firstItem="BKd-E2-B0b" firstAttribute="leading" secondItem="uB7-rU-t81" secondAttribute="leading" constant="16" id="iSS-2d-P82"/>
-                    <constraint firstItem="ylk-tT-XQo" firstAttribute="top" secondItem="uB7-rU-t81" secondAttribute="top" constant="16" id="nH3-uK-zT3"/>
-                    <constraint firstItem="Pxr-fo-n29" firstAttribute="leading" secondItem="BKd-E2-B0b" secondAttribute="trailing" constant="16" id="r6x-05-i6P"/>
+                    <constraint firstItem="BAG-Td-HI1" firstAttribute="leading" secondItem="uB7-rU-t81" secondAttribute="leading" constant="16" id="HeQ-d9-sIF"/>
+                    <constraint firstAttribute="trailing" secondItem="BAG-Td-HI1" secondAttribute="trailing" constant="16" id="JZD-yC-0zx"/>
+                    <constraint firstAttribute="bottom" secondItem="BAG-Td-HI1" secondAttribute="bottom" id="P9Z-gi-jyO"/>
+                    <constraint firstItem="BAG-Td-HI1" firstAttribute="top" secondItem="uB7-rU-t81" secondAttribute="top" constant="12" id="b9v-pU-8Ru"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bodyView" destination="BAG-Td-HI1" id="2ww-Ti-Lak"/>
                 <outlet property="favoriteButton" destination="ylk-tT-XQo" id="yq7-Mh-fRy"/>
                 <outlet property="locationImage" destination="BKd-E2-B0b" id="CAb-1m-5yO"/>
                 <outlet property="name" destination="Pxr-fo-n29" id="bcX-Tg-5ys"/>
@@ -100,10 +124,16 @@
                 <outlet property="ratingView" destination="E8L-OJ-JNS" id="jSv-Qh-zId"/>
                 <outlet property="underText" destination="JyV-bE-xPu" id="X7P-7H-H2n"/>
             </connections>
-            <point key="canvasLocation" x="195.6521739130435" y="82.366071428571431"/>
+            <point key="canvasLocation" x="382.60869565217394" y="139.28571428571428"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Favorited" width="44" height="40"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
