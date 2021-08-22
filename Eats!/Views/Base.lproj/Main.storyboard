@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Restaurants View-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="RestaurantsView" id="BYZ-38-t0r" customClass="RestaurantsView" customModule="Eats_" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Uj4-wk-CXG">
+                                <rect key="frame" x="0.0" y="180" width="414" height="716"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Okq-h2-1HS">
+                                <rect key="frame" x="88" y="132" width="310" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Qcc-1o-siM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHd-aJ-mlg">
+                                <rect key="frame" x="20" y="132" width="52" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="0Pw-SN-wRo"/>
+                                    <constraint firstAttribute="width" constant="52" id="uTc-pw-f2i"/>
+                                </constraints>
+                                <state key="normal" title="Filter">
+                                    <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="filterAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="urH-wK-6vF"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AllTrailsAtLunch" translatesAutoresizingMaskIntoConstraints="NO" id="4zt-Ps-Qz3">
+                                <rect key="frame" x="88.5" y="88" width="237" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="AiM-SR-vLw"/>
+                                    <constraint firstAttribute="width" constant="237" id="cVP-jN-tpI"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Uj4-wk-CXG" firstAttribute="top" secondItem="Okq-h2-1HS" secondAttribute="bottom" constant="16" id="3Go-xP-JEy"/>
+                            <constraint firstItem="Okq-h2-1HS" firstAttribute="centerY" secondItem="RHd-aJ-mlg" secondAttribute="centerY" id="40b-7m-Icm"/>
+                            <constraint firstItem="4zt-Ps-Qz3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4zP-fG-N7O"/>
+                            <constraint firstAttribute="bottom" secondItem="Uj4-wk-CXG" secondAttribute="bottom" id="FcP-m6-IJJ"/>
+                            <constraint firstItem="Uj4-wk-CXG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IfL-gR-sc7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Okq-h2-1HS" secondAttribute="trailing" constant="16" id="JR4-AX-azW"/>
+                            <constraint firstItem="Okq-h2-1HS" firstAttribute="leading" secondItem="RHd-aJ-mlg" secondAttribute="trailing" constant="16" id="R1W-o2-yEj"/>
+                            <constraint firstItem="Okq-h2-1HS" firstAttribute="top" secondItem="4zt-Ps-Qz3" secondAttribute="bottom" constant="10" id="ZBY-0A-5G9"/>
+                            <constraint firstItem="Uj4-wk-CXG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dUm-My-EBj"/>
+                            <constraint firstItem="RHd-aJ-mlg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iDR-Hc-OmZ"/>
+                            <constraint firstItem="4zt-Ps-Qz3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="44" id="wBo-2A-rLD"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="filterButton" destination="RHd-aJ-mlg" id="tp9-7v-daC"/>
+                        <outlet property="headerImage" destination="4zt-Ps-Qz3" id="QU4-oz-nNV"/>
+                        <outlet property="searchField" destination="Okq-h2-1HS" id="g6W-xs-YYS"/>
+                        <outlet property="tableView" destination="Uj4-wk-CXG" id="hm4-lS-Upb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AllTrailsAtLunch" width="225" height="30"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
