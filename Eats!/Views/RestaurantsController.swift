@@ -16,10 +16,12 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var toggleButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     
+    private let refreshControl = UIRefreshControl()
+
     // Constants
     private let cellHeight: CGFloat = 104.0
 
-    // Settign view style determines whether we display map or list.
+    // Setting view style determines whether we display map or list.
     enum Style: Equatable {
         case list, map(locations: [Restaurant])
         
@@ -59,8 +61,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         // Match map view to list view first
         mapView.isHidden = true
         mapView.delegate = self
-        let mapTapped = UITapGestureRecognizer(target: self, action: #selector(RestaurantsController.mapTapped))
-        mapView.addGestureRecognizer(mapTapped)
+        mapView.showsUserLocation = true
 
         // Setup filter button
         filterButton.layer.borderWidth = 1.0
@@ -88,6 +89,9 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: RestaurantCell.reuseIdentifier)
         
+        // Refresh control
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(fetchNewData), for: .valueChanged)
         
         // Make toggle button front most
         toggleButton.contentHorizontalAlignment = .fill
@@ -95,10 +99,19 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         toggleButton.contentMode = .scaleAspectFill
         view.bringSubviewToFront(toggleButton)
         
-        // Notifications for search text field changes and data refreshes
+        // Observe notifications for search text field changes, data refreshes and no locations
         NotificationCenter.default.addObserver(self, selector: #selector(RestaurantsController.filterViewAction), name: UITextField.textDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dataRefreshed), name: Database.dataRefreshed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(noLocationPermissions), name: Locations.noPermissions, object: nil)
         
+        // Add tap areas to dimiss keyboard from
+        let mapTapped = UITapGestureRecognizer(target: self, action: #selector(RestaurantsController.dismissKeyboardAction))
+        mapView.addGestureRecognizer(mapTapped)
+        let viewTapped = UITapGestureRecognizer(target: self, action: #selector(RestaurantsController.dismissKeyboardAction))
+        view.addGestureRecognizer(viewTapped)
+
+
+        // Start with test data in case we don't have internet access.
         data = Database.testData
    }
 
@@ -141,6 +154,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     
     // MARK: ACTIONS ---------------------------------------------------------------------------------
 
+    // User tapped List/Maps Button
     @IBAction func toggleViewAction(_ sender: Any) {
         viewStyle = viewStyle.toggle
     }
@@ -158,17 +172,54 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    @objc func noLocationPermissions() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {return Log.error("Could not display error alert due to nil self.")}
+            let title = "No Location Permissions"
+            let body = "You should give Eats! some location permissions, or it won't be able to display any restaurants other than hard-coded favorites of the developer!"
+             self.okAlert(title: title, body: body)
+        }
+    }
+    
+    @objc func fetchNewData() {
+        if !Database.fetchNewLocations() {
+            // Didn't have location to fetch with
+            let title = "Don't have Location"
+            let body = "Eats! needs location permissions to display local restaruants. If you've  already given Eats! location permissions, try to restart it to get a fresh location."
+            okAlert(title: title, body: body)
+        }
+    }
+    
     @objc func dataRefreshed(notification: Notification) {
         guard let newData = notification.object as? [Restaurant] else {
             return Log.error("Refresh notification missing data")
         }
         data = newData
+        self.refreshControl.endRefreshing()
         tableView.reloadData()
     }
     
-    @objc func mapTapped() {
+    @objc func dismissKeyboardAction() {
         searchField.resignFirstResponder()
     }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        // keyboard should be hidden if we start scrolling.
+        searchField.resignFirstResponder()
+    }
+    
+    // Display alert if we don't have a location.
+    func okAlert(title: String, body: String ) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default) { _ in
+            alert.dismiss(animated: true, completion: {
+                // Can appear during fetch request
+                self.refreshControl.endRefreshing()
+            })
+        }
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+     }
 }
 
 // MARK: TableView ---------------------------------------------------------------------------------
