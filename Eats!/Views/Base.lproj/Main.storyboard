@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="180" width="414" height="716"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Okq-h2-1HS">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Text" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Okq-h2-1HS">
                                 <rect key="frame" x="88" y="132" width="310" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Qcc-1o-siM"/>
@@ -28,13 +28,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BPH-iW-Ioy">
+                                <rect key="frame" x="0.0" y="184" width="414" height="588"/>
+                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHd-aJ-mlg">
                                 <rect key="frame" x="20" y="132" width="52" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="0Pw-SN-wRo"/>
-                                    <constraint firstAttribute="width" constant="52" id="uTc-pw-f2i"/>
+                                    <constraint firstAttribute="width" constant="52" id="C0e-p8-fFL"/>
                                 </constraints>
-                                <state key="normal" title="Filter">
+                                <state key="normal" title="Clear">
                                     <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -48,6 +51,17 @@
                                     <constraint firstAttribute="width" constant="237" id="cVP-jN-tpI"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mme-wp-G8n">
+                                <rect key="frame" x="143" y="772" width="128" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="Ald-P6-VBc"/>
+                                    <constraint firstAttribute="height" constant="70" id="kgd-eO-bmv"/>
+                                </constraints>
+                                <state key="normal" image="MapButton"/>
+                                <connections>
+                                    <action selector="toggleAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G7E-YF-WmA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -55,21 +69,29 @@
                             <constraint firstItem="Uj4-wk-CXG" firstAttribute="top" secondItem="Okq-h2-1HS" secondAttribute="bottom" constant="16" id="3Go-xP-JEy"/>
                             <constraint firstItem="Okq-h2-1HS" firstAttribute="centerY" secondItem="RHd-aJ-mlg" secondAttribute="centerY" id="40b-7m-Icm"/>
                             <constraint firstItem="4zt-Ps-Qz3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4zP-fG-N7O"/>
+                            <constraint firstItem="BPH-iW-Ioy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6pA-7z-e0h"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mme-wp-G8n" secondAttribute="bottom" constant="20" id="Cvz-Tz-Cwf"/>
                             <constraint firstAttribute="bottom" secondItem="Uj4-wk-CXG" secondAttribute="bottom" id="FcP-m6-IJJ"/>
                             <constraint firstItem="Uj4-wk-CXG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IfL-gR-sc7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Okq-h2-1HS" secondAttribute="trailing" constant="16" id="JR4-AX-azW"/>
                             <constraint firstItem="Okq-h2-1HS" firstAttribute="leading" secondItem="RHd-aJ-mlg" secondAttribute="trailing" constant="16" id="R1W-o2-yEj"/>
                             <constraint firstItem="Okq-h2-1HS" firstAttribute="top" secondItem="4zt-Ps-Qz3" secondAttribute="bottom" constant="10" id="ZBY-0A-5G9"/>
+                            <constraint firstItem="BPH-iW-Ioy" firstAttribute="top" secondItem="Okq-h2-1HS" secondAttribute="bottom" constant="20" id="aST-T1-kOg"/>
+                            <constraint firstItem="mme-wp-G8n" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="chp-l0-98U"/>
                             <constraint firstItem="Uj4-wk-CXG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dUm-My-EBj"/>
                             <constraint firstItem="RHd-aJ-mlg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="iDR-Hc-OmZ"/>
+                            <constraint firstItem="mme-wp-G8n" firstAttribute="top" secondItem="BPH-iW-Ioy" secondAttribute="bottom" id="w67-BV-RCO"/>
                             <constraint firstItem="4zt-Ps-Qz3" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="44" id="wBo-2A-rLD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="BPH-iW-Ioy" secondAttribute="trailing" id="xAO-Qf-KNi"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="filterButton" destination="RHd-aJ-mlg" id="tp9-7v-daC"/>
                         <outlet property="headerImage" destination="4zt-Ps-Qz3" id="QU4-oz-nNV"/>
+                        <outlet property="mapView" destination="BPH-iW-Ioy" id="m6U-d0-XyB"/>
                         <outlet property="searchField" destination="Okq-h2-1HS" id="g6W-xs-YYS"/>
                         <outlet property="tableView" destination="Uj4-wk-CXG" id="hm4-lS-Upb"/>
+                        <outlet property="toggleButton" destination="mme-wp-G8n" id="JS2-n1-Yxr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -79,6 +101,7 @@
     </scenes>
     <resources>
         <image name="AllTrailsAtLunch" width="225" height="30"/>
+        <image name="MapButton" width="256" height="140"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

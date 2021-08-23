@@ -6,14 +6,36 @@
 //
 
 import UIKit
+import MapKit
 
-class RestaurantsView: UIViewController, UITextFieldDelegate {
+class RestaurantsView: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var headerImage: UIImageView!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var toggleButton: UIButton!
+    @IBOutlet weak var mapView: MKMapView!
+    
+    enum Style {
+        case list, map
+        
+        var toggle: Style {
+            switch self {
+            case .list:
+                return .map
+            case .map:
+                return .list
+            }
+        }
+    }
     
     var data = Database.testData
+    private var viewStyle: Style = .list
+    {
+        didSet {
+            setViewStyle(viewStyle)
+        }
+    }
     private let cellHeight: CGFloat = 104.0
      
     var restaurants: [Restaurant] {
@@ -21,14 +43,25 @@ class RestaurantsView: UIViewController, UITextFieldDelegate {
         guard searchText.count > 0 else {
             return data
         }
-        return data.filter { restaurant in
-            return restaurant.name.lowercased().contains(searchText)
+        return data.filter { model in
+            if model.name.lowercased().contains(searchText) { return true }
+            if model.bodyText.lowercased().contains(searchText) { return true }
+            return false
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Match map view to list view first
+        mapView.isHidden = true
+        mapView.delegate = self
+//        mapView.translatesAutoresizingMaskIntoConstraints = false
+//        mapView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
+//        mapView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0).isActive = true
+//        mapView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0).isActive = true
+//        mapView.rightAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0).isActive = true
+
         // Setup filter button
         filterButton.layer.borderWidth = 1.0
         filterButton.layer.borderColor = UIColor.eatsGrayBorder.cgColor
@@ -47,7 +80,6 @@ class RestaurantsView: UIViewController, UITextFieldDelegate {
         filterImageView.rightAnchor.constraint(equalTo: searchField.rightAnchor, constant: -4).isActive = true
         
         // Get search text field changes
-        searchField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(searchFieldChanged), name: UITextField.textDidChangeNotification, object: nil)
         
         // Setup table layout
@@ -59,6 +91,13 @@ class RestaurantsView: UIViewController, UITextFieldDelegate {
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: RestaurantCell.reuseIdentifier)
         tableView.backgroundColor = UIColor.eatsTableBackground
+        
+        
+        // Make toggle button front most
+        toggleButton.contentHorizontalAlignment = .fill
+        toggleButton.contentVerticalAlignment = .fill
+        toggleButton.contentMode = .scaleAspectFill
+        view.bringSubviewToFront(toggleButton)
    }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -67,9 +106,33 @@ class RestaurantsView: UIViewController, UITextFieldDelegate {
         tableView.reloadData()
     }
     
+    // Swap map view in front of tableview and vica versa when view style changes.
+    func setViewStyle(_ newStyle: Style) {
+        var frontView: UIView
+        switch newStyle {
+        case .list:
+            mapView.isHidden = true
+            frontView = tableView
+            toggleButton.setImage(UIImage(named: "MapButton"), for: .normal)
+        case .map:
+            tableView.isHidden = true
+            frontView = mapView
+            toggleButton.setImage(UIImage(named: "ListButton"), for: .normal)
+        }
+        // button always in front
+        view.bringSubviewToFront(frontView)
+        view.bringSubviewToFront(toggleButton)
+        frontView.isHidden = false
+    }
+    
     // MARK: ACTIONS ---------------------------------------------------------------------------------
 
+    @IBAction func toggleAction(_ sender: Any) {
+        viewStyle = viewStyle.toggle
+    }
+    
     @IBAction func filterAction(_ sender: Any) {
+        searchField.text = ""
         tableView.reloadData()
     }
     
@@ -112,11 +175,11 @@ extension RestaurantsView: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
+        return true
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        viewStyle = .map
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

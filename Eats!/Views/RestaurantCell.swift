@@ -39,6 +39,10 @@ final class RestaurantCell: UITableViewCell {
     // Add star images to stack view to match rating.
     // This assumes we have only integer values for the ratings, as per design.
     private func setupRatings(_ model: Restaurant) {
+        // clear old first since cells are reused
+        ratingView.arrangedSubviews.forEach { subviews in
+            ratingView.removeArrangedSubview(subviews)
+        }
         for rating in 0..<5 {
             let imageView = UIImageView()
             imageView.image = model.rating > rating ? UIImage(named: "Star") : UIImage(named: "UnStar")
@@ -47,8 +51,8 @@ final class RestaurantCell: UITableViewCell {
             
             // Replace constraints
             imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+            imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         }
         ratingCount.text = "(\(model.ratingCount))"
         ratingCount.textColor = UIColor.eatsGrayText
