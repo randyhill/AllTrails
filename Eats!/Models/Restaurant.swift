@@ -9,7 +9,16 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class Restaurant {
+class Restaurant: Equatable {
+    static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        if lhs.name != rhs.name { return false }
+        
+        // Comparing exact coordinates may not be a good idea depending upon data source.
+        if lhs.coordinate.latitude != rhs.coordinate.latitude { return false }
+        if lhs.coordinate.longitude != rhs.coordinate.longitude { return false }
+        return true
+    }
+    
     enum Cost {
         case cheap, low, medium, high
         

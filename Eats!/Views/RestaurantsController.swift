@@ -21,10 +21,6 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
 
     // Settign view style determines whether we display map or list.
     enum Style: Equatable {
-        static func == (lhs: RestaurantsController.Style, rhs: RestaurantsController.Style) -> Bool {
-            return (lhs == rhs)
-        }
-        
         case list, map(locations: [Restaurant])
         
         var toggle: Style {
@@ -154,7 +150,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         if viewStyle == .list {
             tableView.reloadData()
         } else {
-            
+            setMapToRestaurants(restaurants)
         }
     }
     
