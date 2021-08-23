@@ -97,11 +97,13 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         toggleButton.contentVerticalAlignment = .fill
         toggleButton.contentMode = .scaleAspectFill
         view.bringSubviewToFront(toggleButton)
+        
    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        Locations.shared.start()
         tableView.reloadData()
     }
     
@@ -142,8 +144,12 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func clearAction(_ sender: Any) {
-        searchField.text = ""
-        tableView.reloadData()
+//        searchField.text = ""
+//        tableView.reloadData()
+        guard let coordinates = Locations.shared.last else {
+            return Log.error("NO LOCATION")
+        }
+        YelpRouter().getRestaurants(coordinates)
     }
     
     @objc func filterViewAction() {
