@@ -20,7 +20,11 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     private let cellHeight: CGFloat = 104.0
 
     // Settign view style determines whether we display map or list.
-    enum Style {
+    enum Style: Equatable {
+        static func == (lhs: RestaurantsController.Style, rhs: RestaurantsController.Style) -> Bool {
+            return (lhs == rhs)
+        }
+        
         case list, map(locations: [Restaurant])
         
         var toggle: Style {
@@ -59,6 +63,8 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         // Match map view to list view first
         mapView.isHidden = true
         mapView.delegate = self
+        let mapTapped = UITapGestureRecognizer(target: self, action: #selector(RestaurantsController.mapTapped))
+        mapView.addGestureRecognizer(mapTapped)
 
         // Setup filter button
         filterButton.layer.borderWidth = 1.0
@@ -78,7 +84,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         filterImageView.rightAnchor.constraint(equalTo: searchField.rightAnchor, constant: -4).isActive = true
         
         // Get search text field changes
-        NotificationCenter.default.addObserver(self, selector: #selector(searchFieldChanged), name: UITextField.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RestaurantsController.filterViewAction), name: UITextField.textDidChangeNotification, object: nil)
         
         // Setup table layout
         tableView.delegate = self
@@ -88,7 +94,6 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         tableView.sectionHeaderHeight = 0
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: RestaurantCell.reuseIdentifier)
-//        tableView.backgroundColor = UIColor.eatsTableBackground
         
         
         // Make toggle button front most
@@ -136,17 +141,25 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     
     // MARK: ACTIONS ---------------------------------------------------------------------------------
 
-    @IBAction func toggleAction(_ sender: Any) {
+    @IBAction func toggleViewAction(_ sender: Any) {
         viewStyle = viewStyle.toggle
     }
     
-    @IBAction func filterAction(_ sender: Any) {
+    @IBAction func clearAction(_ sender: Any) {
         searchField.text = ""
         tableView.reloadData()
     }
     
-    @objc func searchFieldChanged() {
-        tableView.reloadData()
+    @objc func filterViewAction() {
+        if viewStyle == .list {
+            tableView.reloadData()
+        } else {
+            
+        }
+    }
+    
+    @objc func mapTapped() {
+        searchField.resignFirstResponder()
     }
 }
 
@@ -188,7 +201,9 @@ extension RestaurantsController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Always dismiss keyboard if cell is tapped.
         tableView.deselectRow(at: indexPath, animated: true)
+        searchField.resignFirstResponder()
         
         guard let restaurant = restaurants[safe: indexPath.row] else {
             return Log.error("No restaurant associated at index: \(indexPath)")
