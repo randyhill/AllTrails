@@ -9,6 +9,10 @@ import UIKit
 import CoreLocation
 
 class Database {
+    static var data = [Restaurant]()
+    
+    static var dataRefreshed = Notification.Name(rawValue: "DataRefreshed")
+    
     static var testData: [Restaurant] {
         return [
             Restaurant(name: "Chez Jose", image: UIImage(named: "martis-trail")!, rating: 5, cost: .medium, ratingCount: 1029, bodyText: "Best Tex Mex on west coast", location: CLLocationCoordinate2D(latitude: 45.463410, longitude: -122.683740), isFavorite: true)!,
@@ -26,6 +30,23 @@ class Database {
     static var locations: [CLLocationCoordinate2D] {
         return testData.map { model in
             return model.coordinate
+        }
+    }
+
+    static func parseNewLocations(_ json: [String: Any]) {
+        guard let businesses = json["businesses"] as? [[String: Any]] else {
+            return Log.error("Could not find businesses in new JSON")
+        }
+        data.removeAll()
+        for businessJSON in businesses {
+            if let newRestaurant = Restaurant(json: businessJSON) {
+                data.append(newRestaurant)
+            }
+        }
+        let updateNotification = Notification(name: dataRefreshed, object: data)
+        DispatchQueue.main.async {
+            // Deliver notification on main queue to UI
+            NotificationCenter.default.post(updateNotification)
         }
     }
 }

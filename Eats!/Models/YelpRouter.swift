@@ -13,39 +13,35 @@ class YelpRouter {
     private let secretKey = ""
     
     func getRestaurants(_ coordinates: CLLocationCoordinate2D) {
-//        let params: [String: Any] =
-//            ["term": "restaurants",
-//             "latitude": "\(coordinates.latitude)",
-//             "longitude": "\(coordinates.longitude)",
-//             "key": apiKey
-//            ]
+        // Create request
         let params = "?term=restaurants&latitude=\(coordinates.latitude)&longitude=\(coordinates.longitude)"
-
         var request = URLRequest(url: URL(string: "https://api.yelp.com/v3/businesses/search\(params)")!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
   
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            guard let response = response else {
-                guard let error = error else { return Log.error("Unknown error returned from Yelp API")}
-                return Log.error("Yelp API returned error: \(error)")
-            }
-            guard let data = data else {
-                return Log.error("Yelp API returned nil data with no error: \(response)")
-            }
-            do {
-                print(response)
-                guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-                    return Log.error("Could not parse data from Yelp: \(response)")
+        // Initiate request without blocking UI.
+        // This is quick and dirty, normally would have dedicate background queue/operations queue.
+        DispatchQueue.global().async {
+            let session = URLSession.shared
+            let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+                guard let response = response else {
+                    guard let error = error else { return Log.error("Unknown error returned from Yelp API")}
+                    return Log.error("Yelp API returned error: \(error)")
                 }
-                print(json)
-            } catch {
-                print("Parsing JSON generated the following error: \(error)")
-            }
-        })
-
-        task.resume()
+                guard let data = data else {
+                    return Log.error("Yelp API returned nil data with no error: \(response)")
+                }
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                        return Log.error("Could not parse data from Yelp: \(response)")
+                    }
+                    Database.parseNewLocations(json)
+                } catch {
+                    print("Parsing JSON generated the following error: \(error)")
+                }
+            })
+            task.resume()
+        }
     }
 }

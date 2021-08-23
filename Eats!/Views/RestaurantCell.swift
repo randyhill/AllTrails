@@ -23,7 +23,17 @@ final class RestaurantCell: UITableViewCell {
     
     func configure(model: Restaurant) {
         self.model = model
-        locationImage.image = model.image
+        if let image = model.image {
+            locationImage.image = model.image
+
+        } else {
+            model.downloadImage { image in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return Log.info("Nil self when image download returned")}
+                    self.locationImage.image = image
+                }
+            }
+        }
         name.text = model.name
         underText.text = model.bodyText
         updateFavorite(model)
@@ -43,17 +53,22 @@ final class RestaurantCell: UITableViewCell {
         ratingView.arrangedSubviews.forEach { subviews in
             ratingView.removeArrangedSubview(subviews)
         }
-        for rating in 0..<5 {
-            let imageView = UIImageView()
-            imageView.image = model.rating > rating ? UIImage(named: "Star") : UIImage(named: "UnStar")
-            imageView.contentMode = .scaleAspectFit
-            ratingView.addArrangedSubview(imageView)
-            
-            // Replace constraints
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        // Leave empty if not rated yet
+        if let rating = model.rating {
+            for stars in 0..<5 {
+                let imageView = UIImageView()
+                imageView.image = rating > stars ? UIImage(named: "Star") : UIImage(named: "UnStar")
+                imageView.contentMode = .scaleAspectFit
+                ratingView.addArrangedSubview(imageView)
+                
+                // Replace constraints
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+                imageView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            }
         }
+
         ratingCount.text = "(\(model.ratingCount))"
         ratingCount.textColor = UIColor.eatsGrayText
      }

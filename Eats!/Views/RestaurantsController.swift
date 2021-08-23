@@ -26,7 +26,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         var toggle: Style {
             switch self {
             case .list:
-                return .map(locations: Database.testData)
+                return .map(locations: Database.data)
             case .map(_):
                 return .list
             }
@@ -40,7 +40,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     }
      
     // Restaurants returns filtered data based on search text
-    var data = Database.testData
+    private var data = [Restaurant]()
     var restaurants: [Restaurant] {
         let searchText = (searchField.text ?? "").lowercased()
         guard searchText.count > 0 else {
@@ -79,9 +79,6 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         filterImageView.topAnchor.constraint(equalTo: searchField.topAnchor, constant: 0).isActive = true
         filterImageView.rightAnchor.constraint(equalTo: searchField.rightAnchor, constant: -4).isActive = true
         
-        // Get search text field changes
-        NotificationCenter.default.addObserver(self, selector: #selector(RestaurantsController.filterViewAction), name: UITextField.textDidChangeNotification, object: nil)
-        
         // Setup table layout
         tableView.delegate = self
         tableView.dataSource = self
@@ -98,6 +95,11 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         toggleButton.contentMode = .scaleAspectFill
         view.bringSubviewToFront(toggleButton)
         
+        // Notifications for search text field changes and data refreshes
+        NotificationCenter.default.addObserver(self, selector: #selector(RestaurantsController.filterViewAction), name: UITextField.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dataRefreshed), name: Database.dataRefreshed, object: nil)
+        
+        data = Database.testData
    }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -144,12 +146,8 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func clearAction(_ sender: Any) {
-//        searchField.text = ""
-//        tableView.reloadData()
-        guard let coordinates = Locations.shared.last else {
-            return Log.error("NO LOCATION")
-        }
-        YelpRouter().getRestaurants(coordinates)
+        searchField.text = ""
+        tableView.reloadData()
     }
     
     @objc func filterViewAction() {
@@ -158,6 +156,14 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         } else {
             setMapToRestaurants(restaurants)
         }
+    }
+    
+    @objc func dataRefreshed(notification: Notification) {
+        guard let newData = notification.object as? [Restaurant] else {
+            return Log.error("Refresh notification missing data")
+        }
+        data = newData
+        tableView.reloadData()
     }
     
     @objc func mapTapped() {
