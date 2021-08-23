@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Restaurants View-->
+        <!--Restaurants Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="RestaurantsView" id="BYZ-38-t0r" customClass="RestaurantsView" customModule="Eats_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RestaurantsView" id="BYZ-38-t0r" customClass="RestaurantsController" customModule="Eats_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="180" width="414" height="716"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Text" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Okq-h2-1HS">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a restaurant" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Okq-h2-1HS">
                                 <rect key="frame" x="88" y="132" width="310" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="Qcc-1o-siM"/>
@@ -32,10 +32,10 @@
                                 <rect key="frame" x="0.0" y="184" width="414" height="588"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHd-aJ-mlg">
-                                <rect key="frame" x="20" y="132" width="52" height="32"/>
+                                <rect key="frame" x="20" y="132" width="60" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="0Pw-SN-wRo"/>
-                                    <constraint firstAttribute="width" constant="52" id="C0e-p8-fFL"/>
+                                    <constraint firstAttribute="width" constant="60" id="C0e-p8-fFL"/>
                                 </constraints>
                                 <state key="normal" title="Clear">
                                     <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -74,7 +74,7 @@
                             <constraint firstAttribute="bottom" secondItem="Uj4-wk-CXG" secondAttribute="bottom" id="FcP-m6-IJJ"/>
                             <constraint firstItem="Uj4-wk-CXG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IfL-gR-sc7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Okq-h2-1HS" secondAttribute="trailing" constant="16" id="JR4-AX-azW"/>
-                            <constraint firstItem="Okq-h2-1HS" firstAttribute="leading" secondItem="RHd-aJ-mlg" secondAttribute="trailing" constant="16" id="R1W-o2-yEj"/>
+                            <constraint firstItem="Okq-h2-1HS" firstAttribute="leading" secondItem="RHd-aJ-mlg" secondAttribute="trailing" constant="8" id="R1W-o2-yEj"/>
                             <constraint firstItem="Okq-h2-1HS" firstAttribute="top" secondItem="4zt-Ps-Qz3" secondAttribute="bottom" constant="10" id="ZBY-0A-5G9"/>
                             <constraint firstItem="BPH-iW-Ioy" firstAttribute="top" secondItem="Okq-h2-1HS" secondAttribute="bottom" constant="20" id="aST-T1-kOg"/>
                             <constraint firstItem="mme-wp-G8n" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="chp-l0-98U"/>

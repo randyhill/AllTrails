@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 class Restaurant {
     enum Cost {
@@ -31,16 +32,23 @@ class Restaurant {
     let cost: Cost
     let ratingCount: Int    // How many ratings
     let description: String    // Short description of restaurant
-    let latitude: Double
-    let longitude: Double
+    let coordinate: CLLocationCoordinate2D
     var isFavorite: Bool
     
     var bodyText: String {
         return cost.dollarSigns + " - " + description
     }
     
+    var annotation: MKPointAnnotation {
+        let annote = MKPointAnnotation()
+        annote.coordinate = coordinate
+        annote.title = name
+        annote.subtitle = description
+        return annote
+    }
+    
     // Only init if date is in proper ranges, to ensure we don't create garbage models and catch garbage data as soon as possible
-    init?(name: String, image: UIImage, rating: Int, cost: Cost, ratingCount: Int, bodyText: String, latitude: Double, longitude: Double, isFavorite: Bool) {
+    init?(name: String, image: UIImage, rating: Int, cost: Cost, ratingCount: Int, bodyText: String, location: CLLocationCoordinate2D, isFavorite: Bool) {
         guard rating >= 0 && rating <= 5 else {
             Log.error("Rating outside of 0 to 5 range, was: \(rating)")
             return nil
@@ -49,12 +57,12 @@ class Restaurant {
             Log.error("Can't have negative rating counts, was: \(ratingCount)")
             return nil
         }
-        guard longitude >= -180 && longitude <= 180 else {
-            Log.error("Longitude outside of -180 to 180 range, was: \(longitude)")
+        guard location.longitude >= -180 && location.longitude <= 180 else {
+            Log.error("Longitude outside of -180 to 180 range, in: \(location)")
             return nil
         }
-        guard latitude >= -90 && latitude <= 90 else {
-            Log.error("latitude outside of --90 to 90 range, was: \(latitude)")
+        guard location.latitude >= -90 && location.latitude <= 90 else {
+            Log.error("latitude outside of --90 to 90 range, was: \(location.latitude)")
             return nil
         }
 
@@ -64,8 +72,7 @@ class Restaurant {
         self.cost = cost
         self.ratingCount = ratingCount
         self.description = bodyText
-        self.latitude = latitude
-        self.longitude = longitude
+        self.coordinate = location
         self.isFavorite = isFavorite
     }
 }

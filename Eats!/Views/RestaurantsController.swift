@@ -16,28 +16,31 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var toggleButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     
+    // Constants
+    private let cellHeight: CGFloat = 104.0
+
+    // Settign view style determines whether we display map or list.
     enum Style {
-        case list, map
+        case list, map(locations: [Restaurant])
         
         var toggle: Style {
             switch self {
             case .list:
-                return .map
-            case .map:
+                return .map(locations: Database.testData)
+            case .map(_):
                 return .list
             }
         }
     }
     
-    var data = Database.testData
-    private var viewStyle: Style = .list
-    {
+    private var viewStyle: Style = .list {
         didSet {
-            setViewStyle(viewStyle)
+            setViewTo(viewStyle)
         }
     }
-    private let cellHeight: CGFloat = 104.0
      
+    // Restaurants returns filtered data based on search text
+    var data = Database.testData
     var restaurants: [Restaurant] {
         let searchText = (searchField.text ?? "").lowercased()
         guard searchText.count > 0 else {
@@ -56,11 +59,6 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         // Match map view to list view first
         mapView.isHidden = true
         mapView.delegate = self
-//        mapView.translatesAutoresizingMaskIntoConstraints = false
-//        mapView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0).isActive = true
-//        mapView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0).isActive = true
-//        mapView.rightAnchor.constraint(equalTo: tableView.rightAnchor, constant: 0).isActive = true
-//        mapView.rightAnchor.constraint(equalTo: tableView.leftAnchor, constant: 0).isActive = true
 
         // Setup filter button
         filterButton.layer.borderWidth = 1.0
@@ -107,23 +105,29 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
     }
     
     // Swap map view in front of tableview and vica versa when view style changes.
-    func setViewStyle(_ newStyle: Style) {
+    func setViewTo(_ newStyle: Style) {
         var frontView: UIView
         switch newStyle {
         case .list:
             mapView.isHidden = true
             frontView = tableView
             toggleButton.setImage(UIImage(named: "MapButton"), for: .normal)
-        case .map:
+        case .map(let restaurants):
             tableView.isHidden = true
             frontView = mapView
             toggleButton.setImage(UIImage(named: "ListButton"), for: .normal)
+            
+            mapView.removeAnnotations(mapView.annotations)
+            let annotations = restaurants.map { restaurant in
+                return restaurant.annotation
+            }
+            mapView.addAnnotations(annotations)
         }
         // button always in front
-        view.bringSubviewToFront(frontView)
-        view.bringSubviewToFront(toggleButton)
+        self.view.bringSubviewToFront(frontView)
+        self.view.bringSubviewToFront(self.toggleButton)
         frontView.isHidden = false
-    }
+     }
     
     // MARK: ACTIONS ---------------------------------------------------------------------------------
 
@@ -179,7 +183,6 @@ extension RestaurantsController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewStyle = .map
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

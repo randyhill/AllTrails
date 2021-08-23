@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		251AD02B26D3359A0048DFD7 /* MkMap+Eats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251AD02A26D3359A0048DFD7 /* MkMap+Eats.swift */; };
 		252EE85726D19F000032B9FD /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 252EE85326D19F000032B9FD /* ProximaNova-Light.otf */; };
 		252EE85826D19F000032B9FD /* ProximaNova-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 252EE85426D19F000032B9FD /* ProximaNova-Semibold.otf */; };
 		252EE85926D19F000032B9FD /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 252EE85526D19F000032B9FD /* ProximaNova-Bold.otf */; };
@@ -20,7 +21,7 @@
 		255E05DF26D1940B00BC76DF /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255E05DE26D1940B00BC76DF /* Restaurant.swift */; };
 		25BDC0F426CB0983003EF0E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDC0F326CB0983003EF0E9 /* AppDelegate.swift */; };
 		25BDC0F626CB0983003EF0E9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDC0F526CB0983003EF0E9 /* SceneDelegate.swift */; };
-		25BDC0F826CB0983003EF0E9 /* RestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDC0F726CB0983003EF0E9 /* RestaurantsView.swift */; };
+		25BDC0F826CB0983003EF0E9 /* RestaurantsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BDC0F726CB0983003EF0E9 /* RestaurantsController.swift */; };
 		25BDC0FB26CB0983003EF0E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25BDC0F926CB0983003EF0E9 /* Main.storyboard */; };
 		25BDC0FE26CB0983003EF0E9 /* Eats_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25BDC0FC26CB0983003EF0E9 /* Eats_.xcdatamodeld */; };
 		25BDC10026CB0984003EF0E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25BDC0FF26CB0984003EF0E9 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		251AD02A26D3359A0048DFD7 /* MkMap+Eats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MkMap+Eats.swift"; sourceTree = "<group>"; };
 		252EE85326D19F000032B9FD /* ProximaNova-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Light.otf"; sourceTree = "<group>"; };
 		252EE85426D19F000032B9FD /* ProximaNova-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Semibold.otf"; sourceTree = "<group>"; };
 		252EE85526D19F000032B9FD /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
@@ -61,7 +63,7 @@
 		25BDC0F026CB0983003EF0E9 /* Eats!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eats!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25BDC0F326CB0983003EF0E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25BDC0F526CB0983003EF0E9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		25BDC0F726CB0983003EF0E9 /* RestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsView.swift; sourceTree = "<group>"; };
+		25BDC0F726CB0983003EF0E9 /* RestaurantsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsController.swift; sourceTree = "<group>"; };
 		25BDC0FA26CB0983003EF0E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		25BDC0FD26CB0983003EF0E9 /* Eats_.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Eats_.xcdatamodel; sourceTree = "<group>"; };
 		25BDC0FF26CB0984003EF0E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				25BDC0F926CB0983003EF0E9 /* Main.storyboard */,
-				25BDC0F726CB0983003EF0E9 /* RestaurantsView.swift */,
+				25BDC0F726CB0983003EF0E9 /* RestaurantsController.swift */,
 				252EE86426D1A93F0032B9FD /* RestaurantCell.swift */,
 				252EE86C26D1BF430032B9FD /* RestaurantCell.xib */,
 			);
@@ -155,6 +157,7 @@
 			children = (
 				252EE85B26D1A0CC0032B9FD /* UIColor+Eats.swift */,
 				252EE86626D1B3030032B9FD /* Collections+Eats.swift */,
+				251AD02A26D3359A0048DFD7 /* MkMap+Eats.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -358,11 +361,12 @@
 			files = (
 				252EE86526D1A93F0032B9FD /* RestaurantCell.swift in Sources */,
 				255E05DF26D1940B00BC76DF /* Restaurant.swift in Sources */,
-				25BDC0F826CB0983003EF0E9 /* RestaurantsView.swift in Sources */,
+				25BDC0F826CB0983003EF0E9 /* RestaurantsController.swift in Sources */,
 				25BDC0F426CB0983003EF0E9 /* AppDelegate.swift in Sources */,
 				252EE86326D1A4BD0032B9FD /* Logging.swift in Sources */,
 				25BDC0FE26CB0983003EF0E9 /* Eats_.xcdatamodeld in Sources */,
 				252EE86726D1B3030032B9FD /* Collections+Eats.swift in Sources */,
+				251AD02B26D3359A0048DFD7 /* MkMap+Eats.swift in Sources */,
 				252EE85C26D1A0CC0032B9FD /* UIColor+Eats.swift in Sources */,
 				252EE86926D1B62A0032B9FD /* Database.swift in Sources */,
 				25BDC0F626CB0983003EF0E9 /* SceneDelegate.swift in Sources */,
