@@ -88,7 +88,7 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
         tableView.sectionHeaderHeight = 0
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         tableView.register(UINib(nibName: "RestaurantCell", bundle: nil), forCellReuseIdentifier: RestaurantCell.reuseIdentifier)
-        tableView.backgroundColor = UIColor.eatsTableBackground
+//        tableView.backgroundColor = UIColor.eatsTableBackground
         
         
         // Make toggle button front most
@@ -117,17 +117,22 @@ class RestaurantsController: UIViewController, MKMapViewDelegate {
             frontView = mapView
             toggleButton.setImage(UIImage(named: "ListButton"), for: .normal)
             
-            mapView.removeAnnotations(mapView.annotations)
-            let annotations = restaurants.map { restaurant in
-                return restaurant.annotation
-            }
-            mapView.addAnnotations(annotations)
+            setMapToRestaurants(restaurants)
         }
         // button always in front
         self.view.bringSubviewToFront(frontView)
         self.view.bringSubviewToFront(self.toggleButton)
         frontView.isHidden = false
      }
+    
+    func setMapToRestaurants(_ restaurants: [Restaurant]) {
+        mapView.removeAnnotations(mapView.annotations)
+        let annotations = restaurants.map { restaurant in
+            return restaurant.annotation
+        }
+        mapView.addAnnotations(annotations)
+        mapView.showAnnotations(self.mapView.annotations, animated: true)
+    }
     
     // MARK: ACTIONS ---------------------------------------------------------------------------------
 
@@ -184,6 +189,11 @@ extension RestaurantsController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let restaurant = restaurants[safe: indexPath.row] else {
+            return Log.error("No restaurant associated at index: \(indexPath)")
+        }
+        viewStyle = .map(locations: [restaurant])
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
